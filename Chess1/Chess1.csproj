@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\ChessPiece.cs" />
     <Compile Include="Model\ChessPosition.cs" />
+    <Compile Include="Model\Move.cs" />
     <Compile Include="Model\PieceType.cs" />
     <Compile Include="ViewModel\ChessVM.cs" />
     <Compile Include="View\ChessWindow.xaml.cs">

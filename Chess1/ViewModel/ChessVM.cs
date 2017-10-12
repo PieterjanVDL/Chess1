@@ -70,6 +70,8 @@ namespace Chess1.ViewModel
                     if (value.Allowed == true)
                     {
 
+                       
+
                         // indien ja:
                         ChessPieces[Convert.ToInt32((selectedItem.Pos.X + 8 * selectedItem.Pos.Y) / 60)].Piece = null;
 
@@ -685,7 +687,8 @@ namespace Chess1.ViewModel
 
                     }
 
-                    //indien wit stuk = > heeft negatieve waarde voor computerspeler => negatieve waarde van maken
+                //witte stukken zijn de stukken van de spelende persoon=> hebben negatieve waarde vanuit oogpunt computerspeler
+               
                     if (piece.Piece.Player==true)
                     {
                         value = -value;
@@ -717,7 +720,7 @@ namespace Chess1.ViewModel
             
             int teller = 0;
             int maxScore = -999999;
-            var coordinaten = new { Pos1 = new Point(0,0), Pos2 = new Point(0, 0) };
+            var coordinaten = new List<Move>();
 
             // de computerspeler bekijkt beurtelings alle zwarte stukken
 
@@ -743,14 +746,25 @@ namespace Chess1.ViewModel
                             int score = Min(teller);
                    
                     // indien deze score groter is dan bij eerder gesimuleerde zetten: score onthouden en coördinaten onthouden van zowel het verzette stuk als zijn bestemming 
+                    // eerder onthouden bewegingen verwijderen uit lijst 'coordinaten' aangezien deze een lagere score hebben
 
                             if (maxScore < score)
                             {
                                 maxScore = score;
-                                coordinaten = new { Pos1 = stuk.Pos, Pos2 = piece.Pos };
+                        coordinaten.Clear(); 
+                        coordinaten.Add(new Move { Pos1 = stuk.Pos, Pos2 = piece.Pos });
+                        
                             }
 
-                            // stukken terugzetten naar origenele positie
+                            // indien score even groot is als de maximale score van vorige 'moves': toevoegen aan lijst coordinaten
+
+                    if (maxScore == score)
+                        {
+                        coordinaten.Add(new Move { Pos1 = stuk.Pos, Pos2 = piece.Pos });
+
+                    }
+
+                            // stukken terugzetten naar originele positie
                     stuk.Piece = piece.Piece;
                     piece.Piece = temp;
 
@@ -768,10 +782,22 @@ namespace Chess1.ViewModel
             {
                 locatie.SupressNotification = false;
             }
-            
+
+
+            // willekeurig één van de optimale bewegingen kiezen
+
+            var numberOfMoves = coordinaten.Count;
+
+
+            // random één van de onthouden (en dus optimale) moves kiezen
+            // dit maakt het spel minder voorspelbaar en saai dan als je slechts één move zou onthouden
+            var index = new Random().Next(numberOfMoves);
+
+
+           
             // verandering doorvoeren: de zet die de hoogste score opleverde wordt uitgevoerd
-            ChessPieces[(Convert.ToInt32(coordinaten.Pos2.X)+ 8*Convert.ToInt32(coordinaten.Pos2.Y))/60].Piece= ChessPieces[(Convert.ToInt32(coordinaten.Pos1.X) + 8*Convert.ToInt32(coordinaten.Pos1.Y))/60].Piece;
-            ChessPieces[(Convert.ToInt32(coordinaten.Pos1.X) + 8 * Convert.ToInt32(coordinaten.Pos1.Y)) / 60].Piece = null;
+            ChessPieces[(Convert.ToInt32(coordinaten[index].Pos2.X)+ 8*Convert.ToInt32(coordinaten[index].Pos2.Y))/60].Piece= ChessPieces[(Convert.ToInt32(coordinaten[index].Pos1.X) + 8*Convert.ToInt32(coordinaten[index].Pos1.Y))/60].Piece;
+            ChessPieces[(Convert.ToInt32(coordinaten[index].Pos1.X) + 8 * Convert.ToInt32(coordinaten[index].Pos1.Y)) / 60].Piece = null;
 
 
 
