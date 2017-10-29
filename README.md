@@ -7,6 +7,6 @@ In order to make a move, the player first selects the piece he wants to move by 
 The application does not allow the player to break the basic rules of chess, instead the player can click on an "illegal" field if he wants to undo his prior selection of a piece.
 It is forbidden to make moves that leave your king exposed. Doing this will result in a warning and the opportunity to make another move.
 
-The game ends when a player cannot make any move that does not leave the king exposed. Here, there are two options, depending on whether or not this player is already in check before making his move. 
-If the king of the stuck player is already in check in the current situation, the game ends in a checkmate. The stuck player loses. 
-On the other hand, if the king of this player is not yet in check (but can't move without getting in check), the result is a stalemate. Neither player wins.
+The game ends when a player cannot make any move that does not leave the king exposed. Here, there are two options, depending on whether or not this player is already in check in the current situation. 
+If it is, the game ends in a checkmate. The "stuck" player loses. 
+If the king of this player is not yet in check (but can't move without getting in check), the result is a stalemate. Neither player wins.
