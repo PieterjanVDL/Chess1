@@ -9,4 +9,4 @@ It is forbidden to make moves that leave your king exposed. Doing this will resu
 
 The game ends when a player cannot make any move that does not leave the king exposed. Here, there are two options, depending on whether or not this player is already in check in the current situation. 
 If it is, the game ends in a checkmate. The "stuck" player loses. 
-If the king of this player is not yet in check (but can't move without getting in check), the result is a stalemate. Neither player wins.
+If the king of this player is not yet in check (but the player can't make a move without causing it to be in check), the result is a stalemate. Neither player wins.
